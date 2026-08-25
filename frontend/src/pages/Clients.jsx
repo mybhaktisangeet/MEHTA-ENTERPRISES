@@ -1,5 +1,6 @@
 import { Globe2 } from "lucide-react";
 import { Reveal, SectionHeading, PageHero, PageWrap } from "../components/Shared";
+import { WorldMap } from "../components/WorldMap";
 import { IMG, DOMESTIC_CLIENTS, INTL_CLIENTS } from "../data/content";
 
 export default function Clients() {
@@ -26,6 +27,7 @@ export default function Clients() {
       <section className="section section-alt" data-testid="international-clients-section">
         <div className="container">
           <SectionHeading kicker="International Clients" title={<>From Pune <span className="accent">to the world</span></>} sub="Components shipped to Italy, South Africa, Colombia, Korea, Belgium, France and Germany." />
+          <WorldMap />
           <div className="cl-grid">
             {INTL_CLIENTS.map((c, i) => (
               <Reveal key={c.name + c.country} delay={i * 0.06} className="intl-card glass-card" data-testid={`intl-client-${i + 1}`}>

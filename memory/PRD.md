@@ -29,9 +29,12 @@ Build a visually stunning, multi-page, mobile-first, modern website for Mehta En
 - [x] Careers: perks, 4 openings, application form (toast)
 - [x] Contact: form (toast), info cards, dark-styled Google Maps embed, group companies
 - [x] Custom 404, mobile menu, page transitions, all content typos from old site fixed (Bajaj Tempo, GM Colombia, etc.), no placeholder social links
+- [x] Client World Map (June 2026): d3-geo + topojson SVG map on Clients page — animated glowing arcs from Pune HQ to 7 international destinations, pulsing pins, hover labels (public/land-110m.json, components/WorldMap.jsx)
+- [x] Machinery Stamp CTAs (June 2026): StampCTA in Shared.jsx — press-stamp scale animation, spark burst, Web Audio metallic clank, navigator.vibrate haptic; used on hero CTAs, Products quote banner, Quote submit
+- [x] Instant Quote page /quote (June 2026): 5-step builder (category, material, 0.5–10mm thickness slider, multi-process chips, volume+contact) with live sticky Quote Spec Sheet + ref number; submit shows toast (MOCKED, no storage)
+- [x] Premium pass (June 2026): route code-splitting (React.lazy + branded ME loader), scroll progress bar, back-to-top button, hero mouse parallax (bg + ghost text), btn-primary shine sweep, marquee edge fade masks, focus-visible a11y outlines, hero image preload, nav "Get Quote" CTA + Contact link
 
 ## Backlog / Next
 - P1: Group photo lightbox on Infrastructure equipment images
-- P2: World map visualization on Clients page
-- P2: Wire forms to backend for stored submissions (if user later wants)
+- P2: Wire forms (contact/career/quote) to backend for stored submissions (if user later wants)
 - P2: Production build + deployment

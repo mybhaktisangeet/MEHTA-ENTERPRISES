@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, animate } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const EASE = [0.16, 1, 0.3, 1];
 
@@ -125,5 +125,63 @@ export const EditorialMarquee = ({ items, speed = "60s" }) => {
         <span className="ghost-text em-text">{row}&nbsp;&nbsp;·&nbsp;&nbsp;</span>
       </div>
     </div>
+  );
+};
+
+export const playStamp = () => {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const og = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(130, t);
+    osc.frequency.exponentialRampToValueAtTime(42, t + 0.12);
+    og.gain.setValueAtTime(0.16, t);
+    og.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    osc.connect(og).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.22);
+    const len = Math.floor(ctx.sampleRate * 0.06);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const bp = ctx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = 2700;
+    bp.Q.value = 6;
+    const ng = ctx.createGain();
+    ng.gain.value = 0.1;
+    src.connect(bp).connect(ng).connect(ctx.destination);
+    src.start(t);
+    setTimeout(() => ctx.close(), 450);
+  } catch {}
+  if (navigator.vibrate) navigator.vibrate(18);
+};
+
+export const StampCTA = ({ to, primary, children, testid }) => {
+  const navigate = useNavigate();
+  const [stamping, setStamping] = useState(false);
+  const onClick = (e) => {
+    e.preventDefault();
+    if (stamping) return;
+    setStamping(true);
+    playStamp();
+    setTimeout(() => navigate(to), 340);
+  };
+  return (
+    <span className="stamp-wrap">
+      <a href={to} onClick={onClick} className={`btn ${primary ? "btn-primary" : "btn-ghost"} stamp-btn ${stamping ? "stamping" : ""}`} data-testid={testid}>
+        {children}
+      </a>
+      {stamping && (
+        <span className="stamp-sparks" aria-hidden="true">
+          {[...Array(8)].map((_, i) => <i key={i} style={{ "--a": `${i * 45}deg` }} />)}
+        </span>
+      )}
+    </span>
   );
 };

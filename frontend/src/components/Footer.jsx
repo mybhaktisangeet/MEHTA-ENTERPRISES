@@ -7,7 +7,7 @@ const LINKS = [
   { label: "Products", to: "/products" }, { label: "Infrastructure", to: "/infrastructure" },
   { label: "Quality", to: "/quality" }, { label: "Clients", to: "/clients" },
   { label: "Gallery", to: "/gallery" }, { label: "Careers", to: "/careers" },
-  { label: "Contact", to: "/contact" },
+  { label: "Instant Quote", to: "/quote" }, { label: "Contact", to: "/contact" },
 ];
 
 export const Footer = () => (

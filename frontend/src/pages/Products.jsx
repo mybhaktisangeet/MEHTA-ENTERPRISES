@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
-import { Reveal, SectionHeading, PageHero, PageWrap, EASE } from "../components/Shared";
+import { CheckCircle2, ArrowRight } from "lucide-react";
+import { Reveal, SectionHeading, PageHero, PageWrap, StampCTA, EASE } from "../components/Shared";
 import { IMG, PRODUCTS, CAPABILITIES } from "../data/content";
 
 export default function Products() {
@@ -98,6 +98,19 @@ export default function Products() {
                 <span>Mechanical presses from 30 Ton to 400 Ton</span>
               </div>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section section-alt" data-testid="products-quote-banner">
+        <div className="container">
+          <Reveal className="quote-banner glass-card">
+            <div>
+              <span className="kicker">Ready to build?</span>
+              <h3>Have drawings ready? Quote it in seconds.</h3>
+              <p>Pick your material, thickness and processes — our engineering team responds with pricing within one business day.</p>
+            </div>
+            <StampCTA to="/quote" primary testid="products-quote-cta">Get an Instant Quote <ArrowRight size={16} /></StampCTA>
           </Reveal>
         </div>
       </section>

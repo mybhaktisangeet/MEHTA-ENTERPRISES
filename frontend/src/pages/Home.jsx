@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronDown, Workflow, TrendingDown, Search, Truck, Trophy, ShieldCheck, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { Reveal, SectionHeading, CTALink, AnimatedCounter, SparkCanvas, EditorialMarquee, PageWrap, EASE } from "../components/Shared";
+import { Reveal, SectionHeading, CTALink, StampCTA, AnimatedCounter, SparkCanvas, EditorialMarquee, PageWrap, EASE } from "../components/Shared";
 import { IMG, TRUSTED_CLIENTS, WHY_US, AWARDS, CERTS, DOMESTIC_CLIENTS, INTL_CLIENTS, COMPANY } from "../data/content";
 
 const ICONS = { Workflow, TrendingDown, Search, Truck };
@@ -13,9 +13,22 @@ const HERO_LINES = [
   { text: "Solutions.", accent: false },
 ];
 
-const Hero = () => (
-  <section className="hero grain" data-testid="home-hero">
-    <div className="hero-bg" style={{ backgroundImage: `url(${IMG.heroPress})` }} />
+const Hero = () => {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const bgX = useSpring(useTransform(mx, [-1, 1], [10, -10]), { stiffness: 45, damping: 18 });
+  const bgY = useSpring(useTransform(my, [-1, 1], [8, -8]), { stiffness: 45, damping: 18 });
+  const ghX = useSpring(useTransform(mx, [-1, 1], [-26, 26]), { stiffness: 40, damping: 20 });
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
+  };
+  return (
+  <section className="hero grain" data-testid="home-hero" onMouseMove={onMove}>
+    <motion.div className="hero-bg" style={{ x: bgX, y: bgY }}>
+      <div className="hero-bg-img" style={{ backgroundImage: `url(${IMG.heroPress})` }} />
+    </motion.div>
     <div className="hero-overlay" />
     <SparkCanvas />
     <div className="container-wide hero-content">
@@ -40,11 +53,11 @@ const Hero = () => (
         Trusted by <strong>Tata Motors, General Motors, Mercedes-Benz, Cummins and FCA</strong> for 38+ years — high-precision press components and welded assemblies, forged in Pune and shipped across the world.
       </motion.p>
       <motion.div className="hero-ctas" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 1.25, ease: EASE }}>
-        <CTALink to="/products" primary testid="hero-cta-products">Explore Our Products <ArrowRight size={16} /></CTALink>
-        <CTALink to="/contact" testid="hero-cta-quote">Request a Quote</CTALink>
+        <StampCTA to="/products" primary testid="hero-cta-products">Explore Our Products <ArrowRight size={16} /></StampCTA>
+        <StampCTA to="/quote" testid="hero-cta-quote">Request a Quote</StampCTA>
       </motion.div>
     </div>
-    <div className="hero-ghost ghost-text" aria-hidden="true">FORGED</div>
+    <motion.div className="hero-ghost ghost-text" aria-hidden="true" style={{ x: ghX }}>FORGED</motion.div>
     <div className="hero-meta">
       <strong>IATF 16949 · BUREAU VERITAS</strong>
       <span>0.50MM – 10MM RAW MATERIAL RANGE</span>
@@ -55,7 +68,8 @@ const Hero = () => (
       <ChevronDown size={16} />
     </div>
   </section>
-);
+  );
+};
 
 const TrustedBar = () => (
   <section className="trust-bar" data-testid="trusted-by-bar">

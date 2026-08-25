@@ -34,6 +34,7 @@ const LINKS = [
   { label: "Clients", to: "/clients" },
   { label: "Gallery", to: "/gallery" },
   { label: "Careers", to: "/careers" },
+  { label: "Contact", to: "/contact" },
 ];
 
 export const Navbar = () => {
@@ -85,7 +86,7 @@ export const Navbar = () => {
             ))}
           </nav>
 
-          <Link to="/contact" className="nav-cta" data-testid="nav-contact-cta">Contact Us</Link>
+          <Link to="/quote" className="nav-cta" data-testid="nav-quote-cta">Get Quote</Link>
 
           <button className="nav-burger" onClick={() => setOpen(!open)} aria-label="Toggle menu" data-testid="nav-mobile-toggle">
             {open ? <X size={24} /> : <Menu size={24} />}
@@ -115,7 +116,7 @@ export const Navbar = () => {
                   )}
                 </div>
               ))}
-              <Link to="/contact" className="btn btn-primary" style={{ marginTop: "1.5rem" }} data-testid="mobile-contact-cta">Contact Us</Link>
+              <Link to="/quote" className="btn btn-primary" style={{ marginTop: "1.5rem" }} data-testid="mobile-quote-cta">Get Instant Quote</Link>
             </nav>
           </motion.div>
         )}
